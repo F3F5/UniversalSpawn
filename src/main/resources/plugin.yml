@@ -1,0 +1,16 @@
+name: UniversalSpawn
+version: ${project.version}
+main: f3f5.universalspawn.UniversalSpawn
+commands:
+  spawn:
+    description: Teleport to spawn if at void level
+    usage: /<command>
+  setspawn:
+    description: Set the spawn location
+    usage: /<command>
+    permission: universalspawn.setspawn 
+
+permissions:
+  spawn.setspawn: 
+    description: Allows player to set the spawn location
+    default: op 
