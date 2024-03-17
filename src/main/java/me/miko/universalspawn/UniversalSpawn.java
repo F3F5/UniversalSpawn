@@ -1,6 +1,5 @@
 package me.miko.universalspawn;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,7 +19,7 @@ public class UniversalSpawn extends JavaPlugin {
 
         getCommand("spawn").setExecutor(new SpawnCommand(this));
 
-        Bukkit.getPluginManager().registerEvents(new BukkitEvent(this), this);
+        getServer().getPluginManager().registerEvents(new BukkitEvent(this), this);
 
         getLogger().info("UniversalSpawn has been enabled!");
     }
