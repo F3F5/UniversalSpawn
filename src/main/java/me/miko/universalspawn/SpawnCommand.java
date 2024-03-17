@@ -15,29 +15,26 @@ public class SpawnCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("spawn")) {
-            if (args.length > 0 && args[0].equalsIgnoreCase("set")) {
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    if (player.hasPermission("universalspawn.spawn.set")) {
-                        plugin.setSpawnLocation(player.getLocation());
-                        plugin.getConfigManager().saveSpawnLocation(player.getLocation());
-                        player.sendMessage("Spawn location has been set!");
-                    } else {
-                        player.sendMessage("You don't have permission to use this command.");
-                    }
-                } else {
-                    sender.sendMessage("Only players can use this command.");
-                }
-                return true;
-            } else {
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    player.teleport(plugin.getSpawnLocation());
-                } else {
-                    sender.sendMessage("Only players can use this command.");
-                }
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Only players can use this command.");
                 return true;
             }
+
+            Player player = (Player) sender;
+
+            if (args.length > 0 && args[0].equalsIgnoreCase("set")) {
+                if (!player.hasPermission("universalspawn.spawn.set")) {
+                    player.sendMessage("You don't have permission to use this command.");
+                    return true;
+                }
+
+                plugin.setSpawnLocation(player.getLocation());
+                plugin.getConfigManager().saveSpawnLocation(player.getLocation());
+                player.sendMessage("Spawn location has been set!");
+            } else {
+                player.teleport(plugin.getSpawnLocation());
+            }
+            return true;
         }
         return false;
     }
