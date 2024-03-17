@@ -1,6 +1,5 @@
 package me.miko.universalspawn;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,7 +13,7 @@ public class Config {
 
     public void loadSpawnLocation() {
         FileConfiguration config = plugin.getConfig();
-        World world = Bukkit.getWorld(config.getString("spawn.world"));
+        World world =  plugin.getServer().getWorld(config.getString("spawn.world"));
         double x = config.getDouble("spawn.x");
         double y = config.getDouble("spawn.y");
         double z = config.getDouble("spawn.z");
