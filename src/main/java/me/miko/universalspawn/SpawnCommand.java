@@ -18,7 +18,7 @@ public class SpawnCommand implements CommandExecutor {
             if (args.length > 0 && args[0].equalsIgnoreCase("set")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    if (player.hasPermission("universalspawn.spawn-set")) {
+                    if (player.hasPermission("universalspawn.spawn.set")) {
                         plugin.setSpawnLocation(player.getLocation());
                         plugin.getConfigManager().saveSpawnLocation(player.getLocation());
                         player.sendMessage("Spawn location has been set!");

@@ -7,6 +7,6 @@ commands:
   spawn:
     description: Teleport to the spawn location.
 permissions:
-  universalspawn.spawn-set:
+  universalspawn.spawn.set:
     description: Allows players to set the spawn location.
     default: op
