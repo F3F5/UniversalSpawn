@@ -47,7 +47,10 @@ public class BukkitEvent implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         if (plugin.getConfigManager().isOnDeathEnabled()) {
             Player player = event.getEntity();
-            Bukkit.getScheduler().runTaskLater(plugin, () -> player.spigot().respawn(), 1);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                player.spigot().respawn();
+                player.teleport(plugin.getSpawnLocation());
+            }, 1);
         }
     }
 }
