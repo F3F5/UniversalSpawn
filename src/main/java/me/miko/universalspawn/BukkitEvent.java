@@ -27,10 +27,10 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event) {
-        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+        if (plugin.getConfigManager().isOnDamageEnabled()) {
             if (event.getEntity() instanceof Player) {
                 Player player = (Player) event.getEntity();
-                if (plugin.getConfigManager().isOnDamageEnabled()) {
+                if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
                     Location spawnLocation = plugin.getSpawnLocation();
                     if (spawnLocation != null && player.getWorld().getName().equals(spawnLocation.getWorld().getName())) {
                         player.teleport(spawnLocation);
