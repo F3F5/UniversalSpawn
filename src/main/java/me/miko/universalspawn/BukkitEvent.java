@@ -2,8 +2,6 @@ package me.miko.universalspawn;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,18 +27,17 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event) {
-        if (plugin.getConfigManager().isOnDamageEnabled()) {
-            Entity entity = event.getEntity();
-            Location spawnLocation = plugin.getSpawnLocation();
-            World configuredWorld = spawnLocation.getWorld();
-
-            if (!(entity instanceof Player) || configuredWorld == null || !entity.getWorld().equals(configuredWorld) || event.getCause() != EntityDamageEvent.DamageCause.VOID) {
-                return;
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            if (plugin.getConfigManager().isOnDamageEnabled()) {
+                if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                    Location spawnLocation = plugin.getSpawnLocation();
+                    if (spawnLocation != null && player.getWorld().getName().equals(spawnLocation.getWorld().getName())) {
+                        player.teleport(spawnLocation);
+                        event.setCancelled(true);
+                    }
+                }
             }
-
-            Player player = (Player) entity;
-            player.teleport(spawnLocation);
-            event.setCancelled(true);
         }
     }
 
