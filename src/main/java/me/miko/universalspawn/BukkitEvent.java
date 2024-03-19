@@ -31,7 +31,7 @@ public class BukkitEvent implements Listener {
                 Player player = (Player) event.getEntity();
                 if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
                     Location spawnLocation = plugin.getSpawnLocation();
-                    if (spawnLocation != null && player.getWorld().getName().equals(spawnLocation.getWorld().getName())) {
+                    if (spawnLocation != null && spawnLocation.getWorld().equals(player.getWorld())) {
                         player.teleport(spawnLocation);
                         event.setCancelled(true);
                     }
