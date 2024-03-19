@@ -1,6 +1,5 @@
 package me.miko.universalspawn;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +44,7 @@ public class BukkitEvent implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         if (plugin.getConfigManager().isOnDeathEnabled()) {
             Player player = event.getEntity();
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                 player.spigot().respawn();
                 player.teleport(plugin.getSpawnLocation());
             }, 1);
