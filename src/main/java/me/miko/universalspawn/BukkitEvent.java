@@ -31,12 +31,13 @@ public class BukkitEvent implements Listener {
         if (plugin.getConfigManager().isEntityDamageEvent()) {
             if (event.getEntity() instanceof Player) {
                 Player player = (Player) event.getEntity();
-                if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                    Location spawnLocation = plugin.getSpawnLocation();
-                    if (spawnLocation != null && spawnLocation.getWorld().equals(player.getWorld())) {
-                        foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
-                        event.setCancelled(true);
-                    }
+                if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
+                    return;
+                }
+                Location spawnLocation = plugin.getSpawnLocation();
+                if (spawnLocation != null && spawnLocation.getWorld().equals(player.getWorld())) {
+                    foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
+                    event.setCancelled(true);
                 }
             }
         }
