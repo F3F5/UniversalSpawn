@@ -1,5 +1,6 @@
 package me.miko.universalspawn;
 
+import com.tcoded.folialib.FoliaLib;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Player;
 
 public class SpawnCommand implements CommandExecutor {
     private final UniversalSpawn plugin;
+    final FoliaLib foliaLib = UniversalSpawn.getFoliaLib();
 
     public SpawnCommand(UniversalSpawn plugin) {
         this.plugin = plugin;
@@ -32,7 +34,7 @@ public class SpawnCommand implements CommandExecutor {
                 plugin.getConfigManager().saveSpawnLocation(player.getLocation());
                 player.sendMessage("Spawn location has been set!");
             } else {
-                player.teleport(plugin.getSpawnLocation());
+                foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
             }
             return true;
         }
