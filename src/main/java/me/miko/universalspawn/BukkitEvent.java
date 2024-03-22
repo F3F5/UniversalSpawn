@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 public class BukkitEvent implements Listener {
     private final UniversalSpawn plugin;
@@ -20,23 +20,22 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (plugin.getConfigManager().isPlayerJoinEvent()) {
+        if (plugin.getConfigManager().TeleportOnJoin()) {
             Player player = event.getPlayer();
             foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onDamage(EntityDamageEvent event) {
-        if (plugin.getConfigManager().isEntityDamageEvent()) {
-            if (event.getEntity() instanceof Player) {
-                Player player = (Player) event.getEntity();
-                if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-                    Location spawnLocation = plugin.getSpawnLocation();
-                    if (spawnLocation != null && spawnLocation.getWorld().equals(player.getWorld())) {
-                        foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
-                        event.setCancelled(true);
-                    }
+    public void onMove(PlayerMoveEvent event) {
+        if (plugin.getConfigManager().TeleportOutOfVoid()) {
+            Player player = event.getPlayer();
+            int checkHeight = plugin.getConfig().getInt("teleport-out-of-void.check-height");
+            if (player.getLocation().getBlockY() <= checkHeight) {
+                Location spawnLocation = plugin.getSpawnLocation();
+                if (spawnLocation != null && spawnLocation.getWorld().equals(player.getWorld())) {
+                    foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
+                    event.setCancelled(true);
                 }
             }
         }
@@ -44,7 +43,7 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDeath(PlayerDeathEvent event) {
-        if (plugin.getConfigManager().isPlayerDeathEvent()) {
+        if (plugin.getConfigManager().TeleportOnDeath()) {
             Player player = event.getEntity();
             foliaLib.getImpl().runAtEntity(player, wrappedTask -> {
                 player.spigot().respawn();

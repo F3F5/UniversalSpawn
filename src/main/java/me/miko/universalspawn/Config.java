@@ -34,15 +34,16 @@ public class Config {
         plugin.saveConfig();
     }
 
-    public boolean isPlayerJoinEvent() {
-        return plugin.getConfig().getBoolean("PlayerJoinEvent", true);
+    public boolean TeleportOnJoin() {
+        return plugin.getConfig().getBoolean("teleport-on-join.enabled", true);
     }
 
-    public boolean isEntityDamageEvent() {
-        return plugin.getConfig().getBoolean("EntityDamageEvent", true);
+    public boolean TeleportOutOfVoid() {
+        return plugin.getConfig().getBoolean("teleport-out-of-void.enabled", true) &&
+                plugin.getConfig().getBoolean("teleport-out-of-void.check-height", true);
     }
 
-    public boolean isPlayerDeathEvent() {
-        return plugin.getConfig().getBoolean("PlayerDeathEvent", true);
+    public boolean TeleportOnDeath() {
+        return plugin.getConfig().getBoolean("teleport-on-death.enabled", true);
     }
 }
