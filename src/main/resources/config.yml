@@ -6,6 +6,6 @@ spawn:
   yaw: 0.0
   pitch: 0.0
 
-onPlayerJoinEnabled: true
-onDamageEnabled: true
-onDeathEnabled: true
+PlayerJoinEvent: true
+EntityDamageEvent: true
+PlayerDeathEvent: true

@@ -1,5 +1,6 @@
 package me.miko.universalspawn;
 
+import com.tcoded.folialib.FoliaLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class BukkitEvent implements Listener {
     private UniversalSpawn plugin;
+    final FoliaLib foliaLib = UniversalSpawn.getFoliaLib();
 
     public BukkitEvent(UniversalSpawn plugin) {
         this.plugin = plugin;
@@ -18,7 +20,7 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (plugin.getConfigManager().isOnPlayerJoinEnabled()) {
+        if (plugin.getConfigManager().isPlayerJoinEvent()) {
             Player player = event.getPlayer();
             player.teleport(plugin.getSpawnLocation());
         }
@@ -26,7 +28,7 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event) {
-        if (plugin.getConfigManager().isOnDamageEnabled()) {
+        if (plugin.getConfigManager().isEntityDamageEvent()) {
             if (event.getEntity() instanceof Player) {
                 Player player = (Player) event.getEntity();
                 if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
@@ -42,12 +44,12 @@ public class BukkitEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDeath(PlayerDeathEvent event) {
-        if (plugin.getConfigManager().isOnDeathEnabled()) {
+        if (plugin.getConfigManager().isPlayerDeathEvent()) {
             Player player = event.getEntity();
-            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            foliaLib.getImpl().runNextTick(task -> {
                 player.spigot().respawn();
                 player.teleport(plugin.getSpawnLocation());
-            }, 1);
+            });
         }
     }
 }
