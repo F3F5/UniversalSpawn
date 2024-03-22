@@ -46,7 +46,7 @@ public class BukkitEvent implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         if (plugin.getConfigManager().isPlayerDeathEvent()) {
             Player player = event.getEntity();
-            foliaLib.getImpl().runNextTick(task -> {
+            foliaLib.getImpl().runAtEntity(player, wrappedTask -> {
                 player.spigot().respawn();
                 player.teleport(plugin.getSpawnLocation());
             });
