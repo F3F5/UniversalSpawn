@@ -35,14 +35,14 @@ public class Config {
     }
 
     public boolean isOnPlayerJoinEnabled() {
-        return plugin.getConfig().getBoolean("onPlayerJoinEnabled", true);
+        return plugin.getConfig().getBoolean("PlayerJoinEvent", true);
     }
 
     public boolean isOnDamageEnabled() {
-        return plugin.getConfig().getBoolean("onDamageEnabled", true);
+        return plugin.getConfig().getBoolean("EntityDamageEvent", true);
     }
 
     public boolean isOnDeathEnabled() {
-        return plugin.getConfig().getBoolean("onDeathEnabled", true);
+        return plugin.getConfig().getBoolean("PlayerDeathEvent", true);
     }
 }
