@@ -11,7 +11,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class BukkitEvent implements Listener {
-    private UniversalSpawn plugin;
+    private final UniversalSpawn plugin;
     final FoliaLib foliaLib = UniversalSpawn.getFoliaLib();
 
     public BukkitEvent(UniversalSpawn plugin) {
@@ -22,7 +22,7 @@ public class BukkitEvent implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (plugin.getConfigManager().isPlayerJoinEvent()) {
             Player player = event.getPlayer();
-            player.teleport(plugin.getSpawnLocation());
+            foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
         }
     }
 
@@ -34,7 +34,7 @@ public class BukkitEvent implements Listener {
                 if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
                     Location spawnLocation = plugin.getSpawnLocation();
                     if (spawnLocation != null && spawnLocation.getWorld().equals(player.getWorld())) {
-                        player.teleport(spawnLocation);
+                        foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
                         event.setCancelled(true);
                     }
                 }
@@ -48,7 +48,7 @@ public class BukkitEvent implements Listener {
             Player player = event.getEntity();
             foliaLib.getImpl().runAtEntity(player, wrappedTask -> {
                 player.spigot().respawn();
-                player.teleport(plugin.getSpawnLocation());
+                foliaLib.getImpl().teleportAsync(player, plugin.getSpawnLocation());
             });
         }
     }

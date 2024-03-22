@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class SpawnCommand implements CommandExecutor {
-    private UniversalSpawn plugin;
+    private final UniversalSpawn plugin;
 
     public SpawnCommand(UniversalSpawn plugin) {
         this.plugin = plugin;

@@ -5,7 +5,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Config {
-    private UniversalSpawn plugin;
+    private final UniversalSpawn plugin;
 
     public Config(UniversalSpawn plugin) {
         this.plugin = plugin;
@@ -13,7 +13,7 @@ public class Config {
 
     public void loadSpawnLocation() {
         FileConfiguration config = plugin.getConfig();
-        World world =  plugin.getServer().getWorld(config.getString("spawn.world"));
+        World world = plugin.getServer().getWorld(config.getString("spawn.world"));
         double x = config.getDouble("spawn.x");
         double y = config.getDouble("spawn.y");
         double z = config.getDouble("spawn.z");
