@@ -1,17 +1,10 @@
-# Settings for teleportation on player join
 teleport-on-join:
   enabled: true
-
-# Settings for teleportation on player death
 teleport-on-death:
   enabled: true
-
-# Settings for teleportation out of void
 teleport-out-of-void:
   enabled: true
   check-height: 0
-
-# Spawn settings
 spawn:
   world: world
   x: 0.0
