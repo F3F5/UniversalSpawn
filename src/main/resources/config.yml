@@ -1,0 +1,14 @@
+teleport-on-join:
+  enabled: true
+teleport-on-death:
+  enabled: true
+teleport-out-of-void:
+  enabled: true
+  check-height: 0
+spawn:
+  world: world
+  x: 0.0
+  y: 64.0
+  z: 0.0
+  yaw: 0.0
+  pitch: 0.0
